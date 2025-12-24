@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: ankane/pgvector
+    container_name: pgvector
+    restart: always
+    environment:
+      POSTGRES_DB: live_cctv
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 12345
+    ports:
+      # Map container 5432 to host 5433 to avoid conflicts with any local Postgres
+      - "5433:5432"

@@ -1,0 +1,23 @@
+camera:
+  id: "CAM_01"
+  source: 0   # 0 = default webcam; or "video.mp4" or RTSP url
+
+pipeline:
+  inference_size: 640   # width for YOLO inference (lower = faster)
+  skip_frames: 2        # run YOLO every N frames (1 = every frame)
+  conf_threshold: 0.35
+  show_window: true
+  send_to_backend: true
+  backend_url: "http://localhost:8000/api/ingest"
+
+smoother:
+  alpha: 0.48
+  expire_seconds: 3.0
+  max_color_history: 8
+
+deepsort:
+  n_init: 3
+  max_age: 30
+  max_cosine_distance: 0.25
+  nms_max_overlap: 0.6
+  embedder: "mobilenet"   # change if you use different embedder

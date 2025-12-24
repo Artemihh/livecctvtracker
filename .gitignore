@@ -1,0 +1,43 @@
+# ===============================
+# Python
+# ===============================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+.env
+venv/
+.env.*
+
+# ===============================
+# Torch / ML models
+# ===============================
+*.pt
+*.pth
+*.onnx
+*.engine
+probe_embedding.npy
+probe_result.json
+
+# ===============================
+# Uploads / runtime files
+# ===============================
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+cv_pipeline/uploads/*
+!cv_pipeline/uploads/.gitkeep
+
+# ===============================
+# Node / Frontend
+# ===============================
+node_modules/
+dist/
+.vite/
+
+# ===============================
+# OS
+# ===============================
+.DS_Store
+Thumbs.db
