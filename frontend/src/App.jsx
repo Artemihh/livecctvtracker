@@ -6,7 +6,10 @@ export default function App() {
   const [result, setResult] = useState(null);
 
   async function upload() {
-    if (!file) return alert("Select image");
+    if (!file) {
+      alert("Please select an image");
+      return;
+    }
 
     setStatus("Uploading probe...");
     setResult(null);
@@ -42,33 +45,157 @@ export default function App() {
   }
 
   return (
-    <div style={{ fontFamily: "sans-serif", padding: 20 }}>
-      <h2>📹 Live CCTV Feed</h2>
-      <img
-        src="http://127.0.0.1:5001/feed"
-        width="520"
-        style={{ borderRadius: 10, border: "2px solid #ddd" }}
-      />
+    <div style={styles.page}>
+      {/* HEADER */}
+      <header style={styles.header}>
+        <h1>📹 Live CCTV Person Tracker</h1>
+        <p>Real‑time person re‑identification system</p>
+      </header>
 
-      <h2 style={{ marginTop: 20 }}>🧍 Upload Person Image</h2>
-      <input type="file" onChange={e => setFile(e.target.files[0])} />
-      <br /><br />
-      <button onClick={upload}>Upload & Search</button>
+      {/* MAIN CONTENT */}
+      <div style={styles.main}>
+        {/* LIVE FEED SECTION */}
+        <div style={styles.feedCard}>
+          <h2>🔴 Live Camera Feed</h2>
 
-      <p><b>Status:</b> {status}</p>
+          <div style={styles.feedBox}>
+            <img
+              src="http://127.0.0.1:5001/feed"
+              alt="Live CCTV Feed"
+              style={styles.feedImg}
+            />
+          </div>
 
-      {result && (
-        <div style={{
-          background: "#e6fffa",
-          padding: 15,
-          borderRadius: 10,
-          border: "1px solid #2dd4bf"
-        }}>
-          <h3>✅ MATCH FOUND</h3>
-          <p>Person ID: <b>{result.person_id}</b></p>
-          <p>Similarity: <b>{result.similarity}</b></p>
+          <p style={{ color: "#16a34a", marginTop: 10 }}>
+            ● Live stream running
+          </p>
         </div>
-      )}
+
+        {/* CONTROL PANEL */}
+        <div style={styles.controlCard}>
+          <h2>🧍 Upload Probe Image</h2>
+
+          <input
+            type="file"
+            onChange={(e) => setFile(e.target.files[0])}
+            style={styles.fileInput}
+          />
+
+          <button onClick={upload} style={styles.button}>
+            Upload & Search
+          </button>
+
+          <div style={styles.statusBox}>
+            <b>Status:</b> {status}
+          </div>
+
+          {result && (
+            <div style={styles.resultBox}>
+              <h3>✅ MATCH FOUND</h3>
+              <p>
+                <b>Person ID:</b> {result.person_id}
+              </p>
+              <p>
+                <b>Similarity:</b> {result.similarity}
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* FOOTER */}
+      <footer style={styles.footer}>
+        Built with OpenCV · YOLO · DeepSORT · FastAPI · React
+      </footer>
     </div>
   );
 }
+
+/* ================= STYLES ================= */
+
+const styles = {
+  page: {
+    fontFamily: "Inter, system-ui, sans-serif",
+    backgroundColor: "#f8fafc",
+    minHeight: "100vh",
+  },
+
+  header: {
+    padding: "20px",
+    background: "linear-gradient(90deg, #0f172a, #020617)",
+    color: "white",
+    textAlign: "center",
+  },
+
+  main: {
+    display: "grid",
+    gridTemplateColumns: "2fr 1fr",
+    gap: "20px",
+    padding: "20px",
+  },
+
+  feedCard: {
+    background: "white",
+    borderRadius: "12px",
+    padding: "16px",
+    boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
+  },
+
+  feedBox: {
+    backgroundColor: "#000",
+    borderRadius: "10px",
+    overflow: "hidden",
+    marginTop: "10px",
+  },
+
+  feedImg: {
+    width: "100%",
+    height: "auto",
+    display: "block",
+  },
+
+  controlCard: {
+    background: "white",
+    borderRadius: "12px",
+    padding: "16px",
+    boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
+  },
+
+  fileInput: {
+    marginTop: "10px",
+    marginBottom: "10px",
+  },
+
+  button: {
+    width: "100%",
+    padding: "10px",
+    backgroundColor: "#2563eb",
+    color: "white",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontSize: "16px",
+  },
+
+  statusBox: {
+    marginTop: "15px",
+    padding: "10px",
+    backgroundColor: "#f1f5f9",
+    borderRadius: "8px",
+  },
+
+  resultBox: {
+    marginTop: "15px",
+    padding: "12px",
+    backgroundColor: "#dcfce7",
+    border: "1px solid #22c55e",
+    borderRadius: "8px",
+  },
+
+  footer: {
+    textAlign: "center",
+    padding: "10px",
+    fontSize: "14px",
+    color: "#475569",
+  },
+};
